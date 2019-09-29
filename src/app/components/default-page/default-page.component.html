@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-12">
+        <mat-card>
+            <h2>Select payment</h2>
+            <mat-card-content>
+                <form class="row" [formGroup]="paymentForm">
+                    <mat-form-field class="col">
+                        <mat-label>Country</mat-label>
+                        <mat-select formControlName="country">
+                            <mat-option *ngFor="let item of countries" [value]="item.id" [textContent]="item.name"> </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <mat-label>Payment method</mat-label>
+                        <mat-select formControlName="method">
+                            <mat-option *ngFor="let item of methods" [value]="item.id">
+                                <img [src]="item.img_url" class="m-r payment-img" /> {{ item.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+                <form class="row" [formGroup]="cardForm">
+                    <div class="col" *ngIf="showPayment">
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Card number</mat-label>
+                                <input matInput formControlName="cardNumber" maxlength="16" [valueFormat]="'^\\d+$'" />
+                                <mat-error *ngIf="isCardFormControlInvalid('cardNumber')">{{
+                                    getCardControlErrorMessage('cardNumber')
+                                }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Expired date</mat-label>
+                                <input matInput [matDatepicker]="dp" placeholder="MM/YYYY" formControlName="expired" [min]="minDate" />
+                                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                <mat-datepicker
+                                    #dp
+                                    startView="multi-year"
+                                    (yearSelected)="chosenYearHandler($event)"
+                                    (monthSelected)="chosenMonthHandler($event, dp)"
+                                    panelClass="example-month-picker"
+                                >
+                                </mat-datepicker>
+                                <mat-error *ngIf="isCardFormControlInvalid('expired')">{{
+                                    getCardControlErrorMessage('expired')
+                                }}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col">
+                                <mat-label>CVC</mat-label>
+                                <input matInput formControlName="cvc" maxlength="3" [valueFormat]="'^\\d+$'" />
+                                <mat-error *ngIf="isCardFormControlInvalid('cvc')">{{ getCardControlErrorMessage('cvc') }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col">
+                                <mat-label>Card holder</mat-label>
+                                <input matInput formControlName="holder" [valueFormat]="'^((?:[A-Za-z]+ ?){1,3})$'" />
+                                <mat-error *ngIf="isCardFormControlInvalid('holder')">{{ getCardControlErrorMessage('holder') }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions *ngIf="showPayment">
+                <div class="row">
+                    <div class="col-3">
+                        <button mat-button (click)="cancel()">Cancel</button>
+                    </div>
+                    <div class="col-6 text-center" *ngIf="paymentValue">
+                        <button mat-raised-button color="primary" (click)="submit()" type="button" formControlName="submitButton">
+                            Pay {{ paymentValue }} {{ paymentCurrency }}
+                        </button>
+                    </div>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

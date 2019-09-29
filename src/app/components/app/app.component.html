@@ -1,0 +1,13 @@
+<mat-sidenav-container>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" class="position-fixed">
+            <span class="mat-spacer"></span>
+            <span>{{ title }}</span>
+        </mat-toolbar>
+    </mat-sidenav-content>
+    <mat-sidenav-content>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

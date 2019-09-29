@@ -2,6 +2,8 @@
 
 http://ip-api.com/json - used for getting country code information. DEMO page uses https, so http://ip-api.com/json can't be load. Please give access for load unsafe scripts.
 
+
+## ANgular CLI info
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
 
 ## Development server
